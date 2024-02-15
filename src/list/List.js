@@ -42,12 +42,15 @@ class List extends React.Component {
         return false
     })
     console.log(newList)
+    this.setState({
+      data:newList
+    })
   }
   render() {
     return (
-        <Tools onAction={this.onListChange}>
+        <Tools onAction={this.onListChange.bind(this)}>
       <div className="app-list">
-        {arr.map((obj) => {
+        {this.state.data.map((obj) => {
           return (
             <ListItem key={obj.descr}
               title={obj.title}
