@@ -7,10 +7,11 @@ function ListItem(props) {
         <hr />
         <div className="list-title">
           <h4>{props.title}</h4>
+          <label onClick={props.onDelete}>Delete</label>
         </div>
         <div className="list-discr">{props.descr}</div>
         <div className="list-label">
-          <Label onAction={()=>{console.log('clicked');}} isActive={props.isActive}/>
+          <Label onAction={props.onLabelClick} isActive={props.isActive}/>
         </div>
         <hr />
       </div>

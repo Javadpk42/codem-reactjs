@@ -11,3 +11,12 @@
     color: gray;
     margin-bottom: 10px;
 }
+.list-title {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.list-title label {
+    color: black;    
+}

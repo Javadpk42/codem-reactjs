@@ -1,18 +1,21 @@
 import React from "react";
-import ListItem from "./ListItem";
 import Tools from "./Tools";
+import SimpleList from "./SimpleList";
 const arr = [
   {
+    id:1,
     title: "appointment with doctor",
     descr: "patient is rescheduled to october",
     isActive: true,
   },
   {
+    id:2,
     title: "appointment with doctor",
     descr: "patient is rescheduled to november",
     isActive: false,
   },
   {
+    id:3,
     title: "appointment with doctor",
     descr: "patient is rescheduled to december",
     isActive: false,
@@ -23,43 +26,48 @@ class List extends React.Component {
     super(props)
     
     this.state={
-      data:arr
+      data:arr,
+      activeState:'all'
     }
   }
   onListChange=(evt)=>{
-    console.log(evt.target.value)
     const value=evt.target.value
-    const newList=arr.filter((item)=>{
-        if(value==='all'){
-            return true
-        }
-        if(value==='active'){
-            return item.isActive===true
-        }
-        if(value==='non-active'){
-            return item.isActive===false
-        }
-        return false
+    this.setState({
+      activeState:value
     })
-    console.log(newList)
+  }
+  handleDelete=(item)=>{
+    console.log(item)
+    const newList=this.state.data.filter(element=>element.id!==item.id)
     this.setState({
       data:newList
     })
   }
+  handleLabelClick=(arg)=>{
+    this.setState({
+      activeState:arg
+    })
+  }
   render() {
+    const{
+      data,
+      activeState
+    }=this.state
+    const newList=data.filter((item)=>{
+        if(activeState==='all'){
+            return true
+        }
+        if(activeState==='active'){
+            return item.isActive===true
+        }
+        if(activeState==='non-active'){
+            return item.isActive===false
+        }
+        return false
+    })
     return (
-        <Tools onAction={this.onListChange}>
-      <div className="app-list">
-        {this.state.data.map((obj) => {
-          return (
-            <ListItem key={obj.descr}
-              title={obj.title}
-              descr={obj.descr}
-              isActive={obj.isActive}
-            />
-          );
-        })}
-      </div>
+        <Tools labelValue={activeState} onAction={this.onListChange}>
+          <SimpleList onLabelClick={this.handleLabelClick} data={newList} onAction={this.handleDelete}/>
       </Tools>
     );
   }
